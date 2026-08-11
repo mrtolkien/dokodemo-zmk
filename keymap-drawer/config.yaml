@@ -1,0 +1,30 @@
+draw_config:
+  key_w: 60
+  key_h: 56
+  split_gap: 30
+  combo_w: 28
+  combo_h: 26
+  key_rx: 6
+  key_ry: 6
+  outer_pad_w: 30
+  outer_pad_h: 56
+  line_spacing: 1.2
+  arc_radius: 6
+  append_colon_to_layer_header: true
+  style_layer_activators: true
+
+parse_config:
+  raw_binding_map:
+    "&bootloader": BOOT
+    "&studio_unlock": Studio Unlock
+    "&a_circ": â
+    "&a_grave": à
+    "&e_acute": é
+    "&e_grave": è
+    "&e_circ": ê
+    "&i_circ": î
+    "&i_trema": ï
+    "&o_circ": ô
+    "&u_circ": û
+    "&u_grave": ù
+  zmk_preamble: "#define KEYMAP_DRAWER"

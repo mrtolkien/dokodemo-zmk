@@ -1,0 +1,254 @@
+layout: {zmk_keyboard: dokodemo}
+layers:
+  default:
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - {t: A, h: fn}
+  - {t: S, h: LALT}
+  - {t: D, h: LCTRL}
+  - {t: F, h: LGUI}
+  - G
+  - H
+  - {t: J, h: RGUI}
+  - {t: K, h: RCTRL}
+  - {t: L, h: LALT}
+  - ;
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - {t: LSHFT, h: sticky}
+  - {t: BSPC, h: nav}
+  - {t: SPACE, h: math}
+  - {t: TAB, h: sym}
+  cad:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - LSHFT
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  nav:
+  - Hyper+TAB
+  - HOME
+  - UP
+  - END
+  - PAGE UP
+  - Meh+F1
+  - Meh+F7
+  - Meh+F8
+  - Meh+F9
+  - Meh+F5
+  - Meh+TAB
+  - LEFT
+  - DOWN
+  - RIGHT
+  - PAGE DOWN
+  - Meh+F6
+  - {t: Meh+F4, h: RGUI}
+  - {t: Meh+F5, h: RCTRL}
+  - {t: Meh+F6, h: LALT}
+  - {t: Meh+F10, h: RSHIFT}
+  - Gui+Z
+  - Gui+X
+  - Gui+C
+  - Gui+V
+  - Meh+1
+  - Meh+F11
+  - Meh+F1
+  - Meh+F2
+  - Meh+F3
+  - Meh+F17
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: Meh+SPACE, h: hyp}
+  - Meh+BACKSPACE
+  math:
+  - Meh+F20
+  - Meh+`
+  - Meh+UP
+  - Meh+-
+  - Meh+'
+  - KP DIVIDE
+  - '7'
+  - '8'
+  - '9'
+  - SPACE
+  - Meh+[
+  - Meh+LEFT
+  - Meh+DOWN
+  - Meh+RIGHT
+  - Meh+]
+  - KP PLUS
+  - '4'
+  - '5'
+  - '6'
+  - '0'
+  - Meh+-
+  - Meh+/
+  - Meh+=
+  - Meh+\
+  - Meh+[
+  - .
+  - '1'
+  - '2'
+  - '3'
+  - ','
+  - LCMD
+  - {t: DEL, h: hyp}
+  - {type: held}
+  - {t: ▽, type: trans}
+  sym:
+  - ^
+  - <
+  - '>'
+  - $
+  - '%'
+  - '@'
+  - '&'
+  - '*'
+  - ''''
+  - '`'
+  - '{'
+  - (
+  - )
+  - '}'
+  - '='
+  - \
+  - KP PLUS
+  - '-'
+  - /
+  - '"'
+  - '~'
+  - '['
+  - ']'
+  - _
+  - '#'
+  - '|'
+  - '!'
+  - ;
+  - ':'
+  - '?'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  fn:
+  - BOOT
+  - {t: BT, h: '0'}
+  - {t: BT, h: '1'}
+  - {t: BT, h: '2'}
+  - BT CLR ALL
+  - F10
+  - F7
+  - F8
+  - F9
+  - NEXT
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - F11
+  - F4
+  - F5
+  - F6
+  - PP
+  - BRI DN
+  - BRI UP
+  - VOL DN
+  - VOL UP
+  - MUTE
+  - F13
+  - F1
+  - F2
+  - F3
+  - F12
+  - {t: ▽, type: trans}
+  - Studio Unlock
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  hyp:
+  - Hyper+F20
+  - Hyper+`
+  - Hyper+UP
+  - Hyper+-
+  - Hyper+'
+  - Hyper+F1
+  - Hyper+F7
+  - Hyper+F8
+  - Hyper+F9
+  - Hyper+F5
+  - Hyper+[
+  - Hyper+LEFT
+  - Hyper+DOWN
+  - Hyper+RIGHT
+  - Hyper+]
+  - Hyper+F6
+  - Hyper+F4
+  - Hyper+F5
+  - Hyper+F6
+  - Hyper+F10
+  - Hyper+-
+  - Hyper+/
+  - Hyper+=
+  - Hyper+\
+  - Hyper+[
+  - Hyper+F11
+  - Hyper+F1
+  - Hyper+F2
+  - Hyper+F3
+  - Hyper+F17
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {type: held}
+  - {t: ▽, type: trans}
+combos:
+- p: [20, 29]
+  k: {t: cad, h: toggle}
+- p: [22, 21]
+  k: ESC
+- p: [27, 28]
+  k: RET

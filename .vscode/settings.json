@@ -1,0 +1,12 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "keymap-drawer/keymap.yaml",
+        "isAsync": true,
+        "cmd": "make keymap-svg"
+      }
+    ]
+  },
+  "svg.preview.background": "custom"
+}

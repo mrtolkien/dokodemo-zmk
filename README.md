@@ -9,6 +9,20 @@ Download compiled firmware from the Actions tab. <https://zmk.dev/docs/user-setu
 Edit your keymap <https://zmk.dev/docs/keymaps>.
 User keymap is located at [`config/dokodemo.keymap`](config/dokodemo.keymap).
 
+## Current keymap
+
+![DokoDemo keymap](keymap-drawer/keymap.svg)
+
+Regenerate the parsed keymap and SVG with:
+
+```sh
+make keymap
+```
+
+This uses `uvx` to run the pinned `keymap-drawer` version without installing it
+globally. Saving `keymap-drawer/keymap.yaml` in VS Code also redraws the SVG when
+the recommended Run on Save extension is installed.
+
 -----
 
 <details>
