@@ -3,18 +3,16 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include "includes/behaviors.dtsi" // Home-row mods, ...
-#include "includes/macros.dtsi"    // Accent macros
+#include "includes/behaviors.dtsi" // Home-row mods
 #include <dt-bindings/zmk/bt.h>
 
 #define DEF_L 0
 #define CAD_L 1
-#define ODK 2
-#define NAV_L 3
-#define NUM_L 4
-#define SYM_L 5
-#define FN_L 6
-#define HYP_L 7
+#define NAV_L 2
+#define NUM_L 3
+#define SYM_L 4
+#define FN_L 5
+#define HYP_L 6
 
 #define MEH(key) LS(LC(LA(key)))
 #define HYP(key) LG(LS(LC(LA(key))))
@@ -29,11 +27,11 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp Q      &kp C      &kp O      &kp P      &kp W          &kp J      &kp M      &kp D      &odkexc    &kp Y
+            &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &lt FN_L A &hml LALT S &hml LCTRL E &hml LGUI N &kp F    &kp L      &hmr RGUI R &hmr RCTRL T &hmr LALT I &kp U
+            &lt FN_L A &hml LALT S &hml LCTRL D &hml LGUI F &kp G      &kp H      &hmr RGUI J &hmr RCTRL K &hmr LALT L &kp SEMICOLON
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z      &kp X      &dashion   &kp V      &kp B          &pecol     &kp H      &kp G      &comacol   &kp K
+            &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp PERIOD &kp SLASH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                          &sk LSHFT  &lt NAV_L BSPC    &lt NUM_L SPACE  &lt SYM_L TAB
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -46,20 +44,6 @@
             &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
             &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
                                              &kp LSHFT  &trans         &trans     &trans
-            >;
-        };
-
-        odk {
-            bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &a_circ   &kp RA(C)    &kp LA(Q)    &o_circ     &trans        &trans        &trans        &kp UNDER     &kp LA(U) &u_circ
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &a_grave  &e_acute     &e_grave     &e_circ     &trans        &kp LPAR      &kp RPAR      &i_circ       &i_trema      &u_grave 
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-              &kp LA(SQT)   &trans       &trans       &trans      &trans        &trans        &trans        &trans        &trans        &trans        
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &trans       &trans      &kp APOS        &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
