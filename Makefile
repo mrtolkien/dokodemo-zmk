@@ -1,14 +1,17 @@
-KEYMAP_DRAWER_VERSION := 0.23.0
-KEYMAP_DRAWER := uvx --from keymap-drawer==$(KEYMAP_DRAWER_VERSION) keymap
+KEYMAP_DRAWER := keymap
 KEYMAP_CONFIG := keymap-drawer/config.yaml
+KEYMAP_FORMATTER := keymap-drawer/format.py
 KEYMAP_SOURCE := config/dokodemo.keymap
 KEYMAP_YAML := keymap-drawer/keymap.yaml
 KEYMAP_SVG := keymap-drawer/keymap.svg
+KEYMAP_LAYERS := Base CAD Nav Math Symbols Fn Hyper
 
 .PHONY: keymap keymap-svg
 
 keymap:
-	$(KEYMAP_DRAWER) -c $(KEYMAP_CONFIG) parse -z $(KEYMAP_SOURCE) -o $(KEYMAP_YAML)
+	$(KEYMAP_DRAWER) -c $(KEYMAP_CONFIG) parse -z $(KEYMAP_SOURCE) \
+		-l $(KEYMAP_LAYERS) -o $(KEYMAP_YAML)
+	python3 $(KEYMAP_FORMATTER) $(KEYMAP_YAML)
 	$(MAKE) keymap-svg
 
 keymap-svg:

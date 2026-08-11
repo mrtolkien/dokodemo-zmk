@@ -19,9 +19,9 @@ Regenerate the parsed keymap and SVG with:
 make keymap
 ```
 
-This uses `uvx` to run the pinned `keymap-drawer` version without installing it
-globally. Saving `keymap-drawer/keymap.yaml` in VS Code also redraws the SVG when
-the recommended Run on Save extension is installed.
+This uses the globally installed `keymap` executable. Saving
+`keymap-drawer/keymap.yaml` in VS Code also redraws the SVG when the recommended
+Run on Save extension is installed.
 
 -----
 
