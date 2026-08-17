@@ -20,9 +20,26 @@ SPLIT_GAP = 280
 CANVAS_H = 670
 
 LAYER_SLOTS = {
-    "Symbols": ("tl", "symbols", 19.0),
-    "NavNum": ("tr", "navnum", 20.0),
+    "Symbols": ("tl", "symbols", 22.0),
+    "NavNum": ("tr", "navnum", 22.5),
     "Fn": ("bl", "fn", 14.5),
+}
+
+NAV_ICONS = {
+    "↖": "arrow-home",
+    "↑": "arrow-up",
+    "↘": "arrow-end",
+    "⇞": "page-up",
+    "←": "arrow-left",
+    "↓": "arrow-down",
+    "→": "arrow-right",
+    "⇟": "page-down",
+}
+
+BASE_ICONS = {
+    "⌫": ("backspace", 42, 32),
+    "⎵": ("space", 44, 28),
+    "⇥": ("tab", 42, 32),
 }
 
 HOLD_LABELS = {
@@ -114,9 +131,25 @@ def physical_center(position: dict) -> tuple[float, float, float]:
 def draw_bluetooth(x: float, y: float, profile: str, css_class: str) -> str:
     profile_size = fitted_size(profile, 14, 44, 9)
     return (
-        f'<use href="#bluetooth" x="{x:g}" y="{y - 11:g}" width="11" height="22" class="{css_class}"/>'
-        + svg_text(x + 15, y, profile, css_class, anchor="start", size=profile_size)
+        f'<use href="#bluetooth" x="{x + 3:g}" y="{y - 9:g}" width="9" height="18" class="{css_class}"/>'
+        + svg_text(x + 16, y + .5, profile, css_class, anchor="start", size=profile_size)
     )
+
+
+def draw_base_icon(icon: str, width: float, height: float, y: float) -> str:
+    return (
+        f'<use href="#{icon}" x="{-width / 2:g}" y="{y - height / 2:g}" '
+        f'width="{width:g}" height="{height:g}" class="base base-icon"/>'
+    )
+
+
+def fn_label_size(value: str, maximum: float) -> float:
+    """Normalize the very different visual weights of Fn-layer labels."""
+    if value in {"⏭", "⏮", "⏯", "♪+", "♪−", "♪×", "☀+", "☀−"}:
+        return 18
+    if value in {"ScrLk", "PrtSc", "Ins", "Lock"}:
+        return fitted_size(value, 12.5, 48, 10)
+    return fitted_size(value, maximum, 48, 8.8)
 
 
 def draw_key(position: dict, center: tuple[float, float, float], index: int, layers: dict[str, list]) -> str:
@@ -127,9 +160,15 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
 
     base_tap, base_hold = key_label(layers["Base"][index])
     if base_hold == "sticky":
-        base_tap, base_hold = "⇧•", ""
-    base_y = -13 if base_hold else 7
-    out.append(svg_text(0, base_y, base_tap, "base", size=fitted_size(base_tap, 29, 72, 14)))
+        out.append('<use href="#shift" x="-25" y="-39" width="50" height="50" class="sticky-shift-icon"/>')
+        out.append(svg_text(0, 30, "STICKY", "sticky-shift-label", size=12.5))
+        base_tap, base_hold = "", ""
+    base_y = -14 if base_hold else 7
+    if base_tap in BASE_ICONS:
+        icon, width, height = BASE_ICONS[base_tap]
+        out.append(draw_base_icon(icon, width, height, base_y - 1))
+    elif base_tap:
+        out.append(svg_text(0, base_y, base_tap, "base", size=fitted_size(base_tap, 30, 72, 14)))
     if base_hold:
         hold_label = HOLD_LABELS.get(base_hold, base_hold)
         badge_width = min(84, max(42, len(hold_label) * 7.8 + 17))
@@ -142,7 +181,9 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
         if base_hold == "⌖":
             out.append('<use href="#navpad" x="-10" y="11" width="20" height="20" class="navnum"/>')
         else:
-            out.append(svg_text(0, 21, hold_label, "base-hold", size=fitted_size(hold_label, 15.5, badge_width - 10, 10.5)))
+            hold_class = "base-hold ctrl-hold" if base_hold == "⌃" else "base-hold"
+            hold_y = 22.5 if base_hold == "⌃" else 21
+            out.append(svg_text(0, hold_y, hold_label, hold_class, size=fitted_size(hold_label, 19, badge_width - 10, 12)))
 
     slots = {
         "tl": (-half + 9, -half + 17, "start"),
@@ -159,13 +200,22 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
             out.append(draw_bluetooth(x, y, hold, css_class))
             continue
 
+        if layer_name == "NavNum" and tap in NAV_ICONS and not hold:
+            icon_width = 22
+            icon_x = x if anchor == "start" else x - icon_width
+            out.append(
+                f'<use href="#{NAV_ICONS[tap]}" x="{icon_x:g}" y="{y - 11:g}" '
+                f'width="{icon_width}" height="22" class="navnum layer-icon"/>'
+            )
+            continue
+
         # Fn-layer holds repeat the base/QWERTY modifier structure and obscure
         # the actual Fn action, so the composite only shows the tap there.
         if layer_name == "Fn" or hold == "fn":
             rendered = tap
         elif hold == "lock" and tap == "⌖":
-            out.append(f'<use href="#navpad" x="{x:g}" y="{y - 13:g}" width="16" height="16" class="navnum"/>')
-            out.append(svg_text(x + 19, y, "lock", "navnum", anchor="start", size=12))
+            out.append(f'<use href="#navpad" x="{x - 46:g}" y="{y - 8:g}" width="16" height="16" class="navnum"/>')
+            out.append(svg_text(x, y, "lock", "navnum", anchor="end", size=12))
             continue
         elif hold == "lock":
             rendered = f"{tap} lock"
@@ -173,16 +223,26 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
             rendered = f"{tap}/{hold}" if hold else tap
         if rendered in {"·", "●"}:
             continue
+        label_class = f"{css_class} symbol-at" if layer_name == "Symbols" and rendered == "@" else css_class
+        size = (
+            fn_label_size(rendered, max_size)
+            if layer_name == "Fn"
+            else fitted_size(rendered, max_size, 50, 9.5)
+        )
         out.append(
             svg_text(
                 x,
                 y,
                 rendered,
-                css_class,
+                label_class,
                 anchor=anchor,
-                size=fitted_size(rendered, max_size, 48, 8.8),
+                size=size,
             )
         )
+
+    if index in {20, 29}:
+        out.append('<rect x="15" y="28" width="32" height="18" rx="9" class="caps-word-pill"/>')
+        out.append(svg_text(31, 37.5, "CW", "caps-word-pill-label", size=11.5))
 
     out.append("</g>")
     return "\n".join(out)
@@ -198,26 +258,53 @@ def mock_key(center_x: float, center_y: float) -> str:
 <g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/>{svg_text(-82, -65, "SYMBOLS ↖", "", size=12)}</g>
 <g class="mock-pill navnum"><rect x="34" y="-78" width="96" height="25" rx="12.5"/>{svg_text(82, -65, "↗ NAVNUM", "", size=12)}</g>
 <g class="mock-pill fn"><rect x="-101" y="53" width="66" height="25" rx="12.5"/>{svg_text(-68, 66, "FN ↙", "", size=12.5)}</g>
-<g class="modifier-legend">
-{svg_text(0, 97, "center = tap  ·  badge = hold", "legend-help", size=14)}
-{svg_text(0, 120, "◆ GUI   ⌃ CTRL   ⌥ ALT", "modifier-key", size=15)}
-{svg_text(0, 143, "⇧•  sticky Shift (next key)", "sticky-key", size=14)}
+<g class="legend-anatomy">
+{svg_text(0, 92, "center = tap  ·  badge = hold", "legend-help", size=12.5)}
 </g>
-<g class="combo-key">
-{svg_text(-68, 171, "⎋", "combo-key-icon", size=21)}
-{svg_text(-48, 171, "ESCAPE", "combo-key-name", anchor="start", size=13.5)}
-{svg_text(34, 171, "↵", "combo-key-icon", size=22)}
-{svg_text(55, 171, "ENTER", "combo-key-name", anchor="start", size=13.5)}
-{svg_text(0, 195, "Z + / → CAPS WORD  ·  ALL LAYERS", "caps-key-help", size=13)}
+<g class="legend-icons">
+{svg_text(-100, 117, "◆", "legend-glyph", size=18)}
+{svg_text(-50, 118.5, "⌃", "legend-glyph", size=18)}
+{svg_text(0, 117, "⌥", "legend-glyph", size=18)}
+{svg_text(50, 117, "⎋", "legend-glyph", size=18)}
+{svg_text(100, 117, "↵", "legend-glyph", size=18)}
+{svg_text(-100, 136, "GUI", "legend-name", size=9.5)}
+{svg_text(-50, 136, "CTRL", "legend-name", size=9.5)}
+{svg_text(0, 136, "ALT", "legend-name", size=9.5)}
+{svg_text(50, 136, "ESCAPE", "legend-name", size=9.5)}
+{svg_text(100, 136, "ENTER", "legend-name", size=9.5)}
 </g>
-<g class="activation-key">
-{svg_text(-8, 222, "hold # → Symbols", "symbols", anchor="end", size=13)}
-{svg_text(8, 222, "hold", "navnum", anchor="start", size=13)}
-<use href="#navpad" x="42" y="214" width="16" height="16" class="navnum"/>
-{svg_text(62, 222, "→ NavNum", "navnum", anchor="start", size=13)}
-{svg_text(0, 246, "hold both inner thumbs → Fn", "fn-activation", size=14)}
+<g class="legend-combo">
+<rect x="-96" y="154" width="60" height="22" rx="11" class="combo-sample-pill"/>
+{svg_text(-66, 165, "combo", "combo-help combo-word", size=12)}
+{svg_text(-26, 165, "press keys together", "combo-help", anchor="start", size=12)}
+</g>
+<g class="legend-layers">
+<line x1="-112" y1="185" x2="112" y2="185" class="legend-divider"/>
+{svg_text(0, 199, "LAYER HOLDS", "legend-section-title", size=9.5)}
+{svg_text(-54, 219, "HOLD", "layer-hold-source", anchor="end", size=10.5)}
+{svg_text(-47, 219, "#", "symbols layer-source-trigger", anchor="start", size=11)}
+{svg_text(63, 219, "HOLD", "layer-hold-source", anchor="end", size=10.5)}
+<use href="#navpad" x="70" y="211.5" width="15" height="15" class="navnum layer-hold-icon"/>
+{svg_text(-59, 238, "→ SYMBOLS", "layer-destination symbols", size=12.5)}
+{svg_text(59, 238, "→ NAVNUM", "layer-destination navnum", size=12.5)}
+<text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>HOLD BOTH INNER THUMBS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
 </g>
 </g>'''
+
+
+def sticky_callout(center: tuple[float, float, float]) -> str:
+    """Keep the one-shot behavior explanation beside the physical key."""
+    x, y, rotation = center
+    return f'''<g transform="translate({x:g} {y:g}) rotate({rotation:g})" class="sticky-callout">
+{svg_text(0, 73, "Tap = active for", "", size=10.5)}
+{svg_text(0, 88, "next letter", "", size=10.5)}
+</g>'''
+
+
+def caps_word_callout(center: tuple[float, float, float]) -> str:
+    """Explain the paired marker once, beside the Z half of the combo."""
+    x, y, _ = center
+    return svg_text(x, y + 72, "CW = CAPS WORD", "caps-word-callout", size=12.5)
 
 
 def gaming_callout(target_x: float, target_y: float, width: float) -> str:
@@ -317,6 +404,18 @@ def main() -> None:
   <symbol id="bluetooth" viewBox="0 0 256 512"><path fill="currentColor" d="M164.9 260L257.5 156.7 111.6 0 111.6 206.3 25.4 120.2-6 151.6 102.1 260-6 368.4 25.4 399.8 111.6 313.7 114.3 512 262.8 363.4 164.9 260zm40.9-103-50 50-.3-100.3 50.3 50.3zm-50 156 50 50-50.3 50.3.3-100.3z"/></symbol>
   <symbol id="navpad" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5 7.5 7h9L12 1.5ZM12 22.5 16.5 17h-9l4.5 5.5ZM1.5 12 7 16.5v-9L1.5 12ZM22.5 12 17 7.5v9l5.5-4.5Z"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/></symbol>
   <symbol id="gamepad" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M8 8h8a5 5 0 0 1 4.7 3.3l1.1 3.1a3 3 0 0 1-5.2 2.8L15 15H9l-1.6 2.2a3 3 0 0 1-5.2-2.8l1.1-3.1A5 5 0 0 1 8 8Z M7 11v4 M5 13h4 M16.5 11.5h.01 M18.5 13.5h.01"/></symbol>
+  <symbol id="arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6.5 10.5 12 5l5.5 5.5"/></symbol>
+  <symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 4v15m-5.5-5.5L12 19l5.5-5.5"/></symbol>
+  <symbol id="arrow-left" viewBox="0 0 24 24"><path d="M20 12H5m5.5-5.5L5 12l5.5 5.5"/></symbol>
+  <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h15m-5.5-5.5L19 12l-5.5 5.5"/></symbol>
+  <symbol id="arrow-home" viewBox="0 0 24 24"><path d="M19 19 5.5 5.5M5.5 12V5.5H12"/></symbol>
+  <symbol id="arrow-end" viewBox="0 0 24 24"><path d="m5 5 13.5 13.5M18.5 12v6.5H12"/></symbol>
+  <symbol id="page-up" viewBox="0 0 24 24"><path d="M5 4h14M12 20V8m-5 5 5-5 5 5"/></symbol>
+  <symbol id="page-down" viewBox="0 0 24 24"><path d="M5 20h14M12 4v12m-5-5 5 5 5-5"/></symbol>
+  <symbol id="backspace" viewBox="0 0 44 32"><path d="M16 6h22v20H16L6 16 16 6Zm6 6 10 8m0-8-10 8"/></symbol>
+  <symbol id="space" viewBox="0 0 44 28"><path d="M5 8v12h34V8"/></symbol>
+  <symbol id="tab" viewBox="0 0 44 32"><path d="M6 6v20m32-20v20M11 16h20m-7-7 7 7-7 7"/></symbol>
+  <symbol id="shift" viewBox="0 0 50 50"><path d="m25 4 18 19H34v19H16V23H7L25 4Z"/></symbol>
 </defs>
 <style>
   svg {{ font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace; fill: #f8fafc; background: #181d27; }}
@@ -325,13 +424,19 @@ def main() -> None:
   .key rect {{ fill: #252c38; stroke: #526071; stroke-width: 1.6; }}
   text {{ dominant-baseline: middle; }}
   .base {{ fill: #f8fafc; font-weight: 700; }}
+  .base-icon, .layer-icon, defs symbol[id^="arrow"] path, defs symbol[id^="page"] path {{ fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }}
+  .base-icon {{ color: #f8fafc; stroke-width: 2.5; }}
+  .sticky-shift-icon {{ fill: #f0abfc; color: #f0abfc; }}
+  .sticky-shift-label {{ fill: #f0abfc; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: 1.4px; }}
   .key rect.hold-badge, .mock-key rect.hold-badge {{ fill: #111827; stroke: #94a3b8; stroke-width: 1.7; }}
   .key rect.hold-badge.nav-hold {{ stroke: #60a5fa; }}
   .key rect.hold-badge.symbol-hold {{ stroke: #fbbf24; }}
   .base-hold {{ fill: #e2e8f0; font-weight: 750; letter-spacing: -.25px; }}
+  .ctrl-hold {{ font-family: system-ui,sans-serif; }}
   .symbols {{ fill: #fbbf24; color: #fbbf24; font-weight: 700; }}
+  .symbol-at {{ font-family: system-ui,sans-serif; font-weight: 750; }}
   .navnum {{ fill: #60a5fa; color: #60a5fa; font-weight: 750; }}
-  .fn {{ fill: #86b99c; color: #86b99c; font-weight: 600; }}
+  .fn {{ fill: #86b99c; color: #86b99c; font-family: system-ui,sans-serif; font-weight: 650; opacity: .76; }}
   .gaming {{ fill: #a98ac2; color: #a98ac2; font-weight: 550; }}
   .title {{ font: 750 27px system-ui,sans-serif; letter-spacing: -.3px; }}
   .subtitle {{ font: 12px system-ui,sans-serif; fill: #9aa7b7; letter-spacing: .6px; }}
@@ -340,22 +445,36 @@ def main() -> None:
   .mock-pill rect {{ fill: #181d27; stroke: currentColor; stroke-width: 1.5; }}
   .mock-pill text {{ fill: currentColor; font-family: system-ui,sans-serif; font-weight: 700; }}
   .mock-pill.fn, .mock-pill.gaming {{ opacity: .78; }}
-  .legend-help {{ fill: #b3bdc9; font-family: system-ui,sans-serif; }}
-  .modifier-key {{ fill: #cbd5e1; font-family: system-ui,sans-serif; font-weight: 700; }}
-  .sticky-key {{ fill: #b3bdc9; font-family: system-ui,sans-serif; font-weight: 650; }}
-  .combo-key-icon {{ fill: #7dd3fc; font-family: system-ui,sans-serif; font-weight: 750; }}
-  .combo-key-name {{ fill: #dbe4ee; font-family: system-ui,sans-serif; font-weight: 700; letter-spacing: .4px; }}
+  .legend-help {{ fill: #aab5c3; font-family: system-ui,sans-serif; }}
+  .legend-glyph {{ fill: #e2e8f0; font-family: system-ui,sans-serif; font-weight: 700; }}
+  .legend-name {{ fill: #aab5c3; font-family: system-ui,sans-serif; font-weight: 700; letter-spacing: .7px; }}
+  .sticky-callout {{ fill: #d8a8df; font-family: system-ui,sans-serif; font-weight: 600; }}
+  .mock-key rect.combo-sample-pill {{ fill: #111827; stroke: #38bdf8; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1 6; }}
+  .combo-help {{ fill: #b3bdc9; font-family: system-ui,sans-serif; font-weight: 600; }}
+  .combo-word {{ fill: #dbe4ee; font-weight: 750; }}
+  .legend-divider {{ stroke: #465365; stroke-width: 1; }}
+  .legend-section-title {{ fill: #7f8b9a; font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: 1.3px; }}
+  .layer-hold-source {{ fill: #aab5c3; font-family: system-ui,sans-serif; font-weight: 650; letter-spacing: .3px; dominant-baseline: middle; }}
+  .layer-source-trigger {{ font-family: system-ui,sans-serif; font-weight: 800; }}
+  .layer-hold-icon {{ opacity: .82; }}
+  .layer-destination {{ font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: .4px; }}
+  .fn-hold-line {{ letter-spacing: .1px; }}
+  .fn-destination {{ fill: #9bc9ac; font-weight: 800; }}
+  .key rect.caps-word-pill {{ fill: #111827; stroke: #38bdf8; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 1 4.5; }}
+  .caps-word-pill-label {{ fill: #7dd3fc; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: .3px; }}
+  .caps-word-callout {{ fill: #9ccfe6; font-family: system-ui,sans-serif; font-weight: 650; letter-spacing: .2px; }}
   .caps-key-help {{ fill: #94a3b8; font-family: system-ui,sans-serif; }}
   .fn-activation {{ fill: #9bc9ac; font-family: system-ui,sans-serif; font-weight: 650; }}
   .gaming-callout {{ color: #a98ac2; }}
   .gaming-callout path {{ fill: none; stroke: #82669a; stroke-width: 1.8; stroke-linecap: round; }}
   .gaming-title {{ fill: #a98ac2; font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: .8px; }}
   .gaming-copy {{ fill: #bac2cc; font-family: system-ui,sans-serif; }}
-  .combo-bridge path {{ fill: none; stroke-width: 4; stroke-linecap: round; }}
-  .combo-bridge rect {{ fill: #111827; stroke-width: 2.2; }}
+  .combo-bridge path {{ fill: none; stroke-width: 3.4; stroke-linecap: round; stroke-dasharray: 1 8; }}
+  .combo-bridge rect {{ fill: #111827; stroke-width: 2.2; stroke-dasharray: 1 5.5; stroke-linecap: round; }}
   .combo-default path, .combo-default rect {{ stroke: #38bdf8; }}
   .gaming-combo path, .gaming-combo rect {{ stroke: #a98ac2; }}
   .fn-combo path, .fn-combo rect {{ stroke: #78a98a; }}
+  .fn-combo path, .fn-combo rect {{ stroke-dasharray: none; }}
   .gaming-combo {{ color: #d8b4fe; }}
   .combo-label {{ fill: #f8fafc; font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: .15px; }}
 </style>
@@ -363,6 +482,8 @@ def main() -> None:
 <text x="36" y="29" class="title">DokoDemo · Colemak-DH</text>
 {keys}
 {combo_lines}
+{sticky_callout(centers[30])}
+{caps_word_callout(centers[20])}
 {mock_key(center_x, 160)}
 {gaming_callout(gaming_x, gaming_y, width)}
 </svg>
