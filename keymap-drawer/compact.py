@@ -162,7 +162,7 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
     base_tap, base_hold = key_label(base_value)
     if base_hold == "sticky":
         out.append('<use href="#shift" x="-25" y="-39" width="50" height="50" class="sticky-shift-icon"/>')
-        out.append(svg_text(0, 30, "MAJ. 1×", "sticky-shift-label", size=11.5))
+        out.append(svg_text(0, 30, "SHIFT 1×", "sticky-shift-label", size=11.5))
         base_tap, base_hold = "", ""
     base_y = -14 if base_hold else 7
     if base_tap in BASE_ICONS:
@@ -266,15 +266,15 @@ def mock_key(center_x: float, center_y: float) -> str:
     return f'''<g class="mock-key" transform="translate({center_x:g} {center_y:g})">
 <rect x="-70" y="-66" width="140" height="132" rx="13" class="mock-cap"/>
 {svg_text(0, -12, "BASE", "mock-base", size=22)}
-{svg_text(0, -40, "⇧ MAJ.", "core-shift", size=14)}
+{svg_text(0, -40, "⇧ SHIFT", "core-shift", size=14)}
 <rect x="-34" y="4" width="68" height="25" rx="12.5" class="hold-badge"/>
-{svg_text(0, 17, "MAINTIEN", "base-hold", size=10.5)}
-<g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/>{svg_text(-82, -65, "#  SYMBOLES", "", size=10.5)}</g>
+{svg_text(0, 17, "HOLD", "base-hold", size=10.5)}
+<g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/>{svg_text(-82, -65, "#  SYMBOLS", "", size=10.5)}</g>
 <g class="mock-pill navnum"><rect x="34" y="-78" width="96" height="25" rx="12.5"/><use href="#navpad" x="45" y="-73" width="16" height="16"/>{svg_text(67, -65, "NAVNUM", "", anchor="start", size=11.5)}</g>
 <g class="mock-pill fn"><rect x="-101" y="53" width="66" height="25" rx="12.5"/>{svg_text(-68, 66, "fn", "", size=13)}</g>
-<g class="mock-pill gaming"><rect x="35" y="53" width="96" height="25" rx="12.5"/><use href="#gamepad" x="45" y="56" width="20" height="20"/>{svg_text(70, 66, "JEU", "", anchor="start", size=10.5)}</g>
+<g class="mock-pill gaming"><rect x="35" y="53" width="96" height="25" rx="12.5"/><use href="#gamepad" x="45" y="56" width="20" height="20"/>{svg_text(70, 66, "GAMING", "", anchor="start", size=10.5)}</g>
 <g class="legend-anatomy">
-{svg_text(0, 92, "haut = Maj.  ·  centre = frappe  ·  pastille = maintien", "legend-help", size=10.5)}
+{svg_text(0, 92, "top = Shift  ·  center = tap  ·  pill = hold", "legend-help", size=10.5)}
 </g>
 <g class="legend-icons">
 {svg_text(-100, 117, "◆", "legend-glyph", size=18)}
@@ -285,22 +285,22 @@ def mock_key(center_x: float, center_y: float) -> str:
 {svg_text(-100, 136, "GUI", "legend-name", size=9.5)}
 {svg_text(-50, 136, "CTRL", "legend-name", size=9.5)}
 {svg_text(0, 136, "ALT", "legend-name", size=9.5)}
-{svg_text(50, 136, "ÉCHAP.", "legend-name", size=9.5)}
-{svg_text(100, 136, "ENTRÉE", "legend-name", size=9.5)}
+{svg_text(50, 136, "ESC", "legend-name", size=9.5)}
+{svg_text(100, 136, "ENTER", "legend-name", size=9.5)}
 </g>
 <g class="legend-combo">
 <rect x="-96" y="154" width="60" height="22" rx="11" class="combo-sample-pill"/>
 {svg_text(-66, 165, "combo", "combo-help combo-word", size=12)}
-{svg_text(-26, 165, "appuyer ensemble", "combo-help", anchor="start", size=12)}
+{svg_text(-26, 165, "press together", "combo-help", anchor="start", size=12)}
 </g>
 <g class="legend-layers">
 <line x1="-112" y1="185" x2="112" y2="185" class="legend-divider"/>
-{svg_text(0, 199, "MAINTENIR POUR LES COUCHES", "legend-section-title", size=8.8)}
+{svg_text(0, 199, "HOLD FOR LAYERS", "legend-section-title", size=8.8)}
 {svg_text(-59, 219, "#", "symbols layer-source-trigger", size=14)}
 <use href="#navpad" x="51.5" y="211.5" width="15" height="15" class="navnum layer-hold-icon"/>
-{svg_text(-59, 238, "→ SYMBOLES", "layer-destination symbols", size=12)}
+{svg_text(-59, 238, "→ SYMBOLS", "layer-destination symbols", size=12)}
 {svg_text(59, 238, "→ NAVNUM", "layer-destination navnum", size=12.5)}
-<text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>2 POUCES INTÉRIEURS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
+<text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>2 INNER THUMBS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
 </g>
 </g>'''
 
@@ -309,15 +309,15 @@ def sticky_callout(center: tuple[float, float, float]) -> str:
     """Keep the one-shot behavior explanation beside the physical key."""
     x, y, rotation = center
     return f'''<g transform="translate({x:g} {y:g}) rotate({rotation:g})" class="sticky-callout">
-{svg_text(0, 73, "Une frappe active", "", size=10.5)}
-{svg_text(0, 88, "la prochaine lettre", "", size=10.5)}
+    {svg_text(0, 73, "One press affects", "", size=10.5)}
+    {svg_text(0, 88, "the next letter", "", size=10.5)}
 </g>'''
 
 
 def caps_word_callout(center: tuple[float, float, float]) -> str:
     """Explain the paired marker once, beside the Z half of the combo."""
     x, y, _ = center
-    return svg_text(x, y + 72, "CW = MOTS EN MAJ.", "caps-word-callout", size=12.5)
+    return svg_text(x, y + 72, "CW = CAPS WORD", "caps-word-callout", size=12.5)
 
 
 def gaming_callout(target_x: float, target_y: float, width: float) -> str:
@@ -327,10 +327,10 @@ def gaming_callout(target_x: float, target_y: float, width: float) -> str:
     return f'''<g class="gaming-callout">
 <path d="M {target_x - 14:g} {target_y + 10:g} L {x + 24:g} {y - 5:g}"/>
 <use href="#gamepad" x="{x:g}" y="{y - 11:g}" width="25" height="25"/>
-{svg_text(x + 34, y + 1, "JEU", "gaming-title", anchor="start", size=14)}
-{svg_text(x + 34, y + 24, "bascule : . + / en combo", "gaming-copy", anchor="start", size=14)}
-{svg_text(x + 34, y + 45, "QWERTY · gauche sans délai", "gaming-copy", anchor="start", size=14)}
-{svg_text(x + 34, y + 66, "pouces gauches : ⇧ + Espace", "gaming-copy", anchor="start", size=14)}
+    {svg_text(x + 34, y + 1, "GAMING", "gaming-title", anchor="start", size=14)}
+    {svg_text(x + 34, y + 24, "toggle: . + / combo", "gaming-copy", anchor="start", size=14)}
+    {svg_text(x + 34, y + 45, "QWERTY · left hand, no delay", "gaming-copy", anchor="start", size=14)}
+    {svg_text(x + 34, y + 66, "left thumbs: ⇧ + Space", "gaming-copy", anchor="start", size=14)}
 </g>'''
 
 

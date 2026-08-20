@@ -316,7 +316,7 @@
 <g transform="translate(534 505) rotate(10)" class="key key-30">
 <rect x="-54" y="-54" width="108" height="108" rx="10"/>
 <use href="#shift" x="-25" y="-39" width="50" height="50" class="sticky-shift-icon"/>
-<text x="0" y="30" class="sticky-shift-label" text-anchor="middle" font-size="11.5">MAJ. 1×</text>
+<text x="0" y="30" class="sticky-shift-label" text-anchor="middle" font-size="11.5">SHIFT 1×</text>
 </g>
 <g transform="translate(650 533) rotate(18)" class="key key-31">
 <rect x="-54" y="-54" width="108" height="108" rx="10"/>
@@ -361,22 +361,22 @@
 <text x="722" y="533.5" class="combo-label" text-anchor="middle" font-size="13">fn</text>
 </g>
 <g transform="translate(534 505) rotate(10)" class="sticky-callout">
-<text x="0" y="73" class="" text-anchor="middle" font-size="10.5">Une frappe active</text>
-<text x="0" y="88" class="" text-anchor="middle" font-size="10.5">la prochaine lettre</text>
+    <text x="0" y="73" class="" text-anchor="middle" font-size="10.5">One press affects</text>
+    <text x="0" y="88" class="" text-anchor="middle" font-size="10.5">the next letter</text>
 </g>
-<text x="96" y="478" class="caps-word-callout" text-anchor="middle" font-size="12.5">CW = MOTS EN MAJ.</text>
+<text x="96" y="478" class="caps-word-callout" text-anchor="middle" font-size="12.5">CW = CAPS WORD</text>
 <g class="mock-key" transform="translate(722 160)">
 <rect x="-70" y="-66" width="140" height="132" rx="13" class="mock-cap"/>
 <text x="0" y="-12" class="mock-base" text-anchor="middle" font-size="22">BASE</text>
-<text x="0" y="-40" class="core-shift" text-anchor="middle" font-size="14">⇧ MAJ.</text>
+<text x="0" y="-40" class="core-shift" text-anchor="middle" font-size="14">⇧ SHIFT</text>
 <rect x="-34" y="4" width="68" height="25" rx="12.5" class="hold-badge"/>
-<text x="0" y="17" class="base-hold" text-anchor="middle" font-size="10.5">MAINTIEN</text>
-<g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/><text x="-82" y="-65" class="" text-anchor="middle" font-size="10.5">#  SYMBOLES</text></g>
+<text x="0" y="17" class="base-hold" text-anchor="middle" font-size="10.5">HOLD</text>
+<g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/><text x="-82" y="-65" class="" text-anchor="middle" font-size="10.5">#  SYMBOLS</text></g>
 <g class="mock-pill navnum"><rect x="34" y="-78" width="96" height="25" rx="12.5"/><use href="#navpad" x="45" y="-73" width="16" height="16"/><text x="67" y="-65" class="" text-anchor="start" font-size="11.5">NAVNUM</text></g>
 <g class="mock-pill fn"><rect x="-101" y="53" width="66" height="25" rx="12.5"/><text x="-68" y="66" class="" text-anchor="middle" font-size="13">fn</text></g>
-<g class="mock-pill gaming"><rect x="35" y="53" width="96" height="25" rx="12.5"/><use href="#gamepad" x="45" y="56" width="20" height="20"/><text x="70" y="66" class="" text-anchor="start" font-size="10.5">JEU</text></g>
+<g class="mock-pill gaming"><rect x="35" y="53" width="96" height="25" rx="12.5"/><use href="#gamepad" x="45" y="56" width="20" height="20"/><text x="70" y="66" class="" text-anchor="start" font-size="10.5">GAMING</text></g>
 <g class="legend-anatomy">
-<text x="0" y="92" class="legend-help" text-anchor="middle" font-size="10.5">haut = Maj.  ·  centre = frappe  ·  pastille = maintien</text>
+<text x="0" y="92" class="legend-help" text-anchor="middle" font-size="10.5">top = Shift  ·  center = tap  ·  pill = hold</text>
 </g>
 <g class="legend-icons">
 <text x="-100" y="117" class="legend-glyph" text-anchor="middle" font-size="18">◆</text>
@@ -387,30 +387,30 @@
 <text x="-100" y="136" class="legend-name" text-anchor="middle" font-size="9.5">GUI</text>
 <text x="-50" y="136" class="legend-name" text-anchor="middle" font-size="9.5">CTRL</text>
 <text x="0" y="136" class="legend-name" text-anchor="middle" font-size="9.5">ALT</text>
-<text x="50" y="136" class="legend-name" text-anchor="middle" font-size="9.5">ÉCHAP.</text>
-<text x="100" y="136" class="legend-name" text-anchor="middle" font-size="9.5">ENTRÉE</text>
+<text x="50" y="136" class="legend-name" text-anchor="middle" font-size="9.5">ESC</text>
+<text x="100" y="136" class="legend-name" text-anchor="middle" font-size="9.5">ENTER</text>
 </g>
 <g class="legend-combo">
 <rect x="-96" y="154" width="60" height="22" rx="11" class="combo-sample-pill"/>
 <text x="-66" y="165" class="combo-help combo-word" text-anchor="middle" font-size="12">combo</text>
-<text x="-26" y="165" class="combo-help" text-anchor="start" font-size="12">appuyer ensemble</text>
+<text x="-26" y="165" class="combo-help" text-anchor="start" font-size="12">press together</text>
 </g>
 <g class="legend-layers">
 <line x1="-112" y1="185" x2="112" y2="185" class="legend-divider"/>
-<text x="0" y="199" class="legend-section-title" text-anchor="middle" font-size="8.8">MAINTENIR POUR LES COUCHES</text>
+<text x="0" y="199" class="legend-section-title" text-anchor="middle" font-size="8.8">HOLD FOR LAYERS</text>
 <text x="-59" y="219" class="symbols layer-source-trigger" text-anchor="middle" font-size="14">#</text>
 <use href="#navpad" x="51.5" y="211.5" width="15" height="15" class="navnum layer-hold-icon"/>
-<text x="-59" y="238" class="layer-destination symbols" text-anchor="middle" font-size="12">→ SYMBOLES</text>
+<text x="-59" y="238" class="layer-destination symbols" text-anchor="middle" font-size="12">→ SYMBOLS</text>
 <text x="59" y="238" class="layer-destination navnum" text-anchor="middle" font-size="12.5">→ NAVNUM</text>
-<text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>2 POUCES INTÉRIEURS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
+<text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>2 INNER THUMBS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
 </g>
 </g>
 <g class="gaming-callout">
 <path d="M 1280 403 L 1153 519"/>
 <use href="#gamepad" x="1129" y="513" width="25" height="25"/>
-<text x="1163" y="525" class="gaming-title" text-anchor="start" font-size="14">JEU</text>
-<text x="1163" y="548" class="gaming-copy" text-anchor="start" font-size="14">bascule : . + / en combo</text>
-<text x="1163" y="569" class="gaming-copy" text-anchor="start" font-size="14">QWERTY · gauche sans délai</text>
-<text x="1163" y="590" class="gaming-copy" text-anchor="start" font-size="14">pouces gauches : ⇧ + Espace</text>
+    <text x="1163" y="525" class="gaming-title" text-anchor="start" font-size="14">GAMING</text>
+    <text x="1163" y="548" class="gaming-copy" text-anchor="start" font-size="14">toggle: . + / combo</text>
+    <text x="1163" y="569" class="gaming-copy" text-anchor="start" font-size="14">QWERTY · left hand, no delay</text>
+    <text x="1163" y="590" class="gaming-copy" text-anchor="start" font-size="14">left thumbs: ⇧ + Space</text>
 </g>
 </svg>
