@@ -20,11 +20,11 @@
             display-name = "Base";
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-            &kp Q      &kp W      &kp F      &kp P      &kp B          &kp J      &kp L      &kp U      &kp Y      &kp SEMI
+            &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp A      &hml LALT R &hml LCTRL S &hml LGUI T &kp G     &kp M      &hmr RGUI N &hmr RCTRL E &hmr LALT I &kp O
+            &hml_pinky LCTRL A &hml_ring LALT S &hml_middle LGUI D &hml_index LSHFT F &kp G     &kp H      &hmr_index RSHFT J &hmr_middle RGUI K &hmr_ring LALT L &hmr_pinky RCTRL SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-            &kp Z      &kp X      &kp C      &kp D      &kp V          &kp K      &kp H      &kp COMMA  &kp DOT    &kp FSLH
+            &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                          &sk LSHFT  &lt NAV_NUM_L BSPC    &lt NAV_NUM_L SPACE  &lt SYM_L TAB
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -68,7 +68,7 @@
             display-name = "Gaming";
             bindings = <
             &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
-            &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      &hmr RGUI J &hmr RCTRL K &hmr LALT L &kp SEMI
+            &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      &hmr_index RSHFT J &hmr_middle RGUI K &hmr_ring LALT L &hmr_pinky RCTRL SEMI
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
                                          &kp LSHFT  &kp SPACE            &lt NAV_NUM_L BSPC  &lt SYM_L TAB
             >;

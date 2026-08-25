@@ -5,12 +5,13 @@
 # ZMK Configuration for DokoDemo
 
 This repository contains the default DokoDemo firmware and keymap. The keymap
-uses firmware-level Colemak-DH on a QWERTY host and is inspired by Selenium's
-compact layer design.
+uses QWERTY and is inspired by Selenium's compact layer design, with a
+per-finger home-row mod scheme adapted from a larger go60-style split.
 
 Highlights:
 
-- bilateral home-row mods in Alt, Ctrl, GUI order;
+- per-finger bilateral home-row mods in Ctrl, Alt, GUI, Shift order
+  (pinky-to-index), mirrored on both hands;
 - sticky Shift plus dual Backspace/Space NavNum thumb keys;
 - a shared navigation and numpad layer;
 - Selenium-style Symbols and Fn/Media layers;
